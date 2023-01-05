@@ -60,11 +60,85 @@ public static void getById(){
 
 public static void updateById(){
 	
+	 String url = "jdbc:mysql://localhost:3306/hoteldbms";
+	    String user = "root";
+     String pass = "10@104Ar$";
+	
+	Scanner in = new Scanner(System.in);
+	System.out.println("Enter the id of the row to update: ");
+	int id = in.nextInt();
+	Connection con = null;
+	try {
+		Driver driver = (Driver) Class.forName("com.mysql.jdbc.Driver").newInstance();
+		DriverManager.registerDriver(driver);
+		con = DriverManager.getConnection(url, user, pass);
+		
+		//some instructions i follow from this website: https://alvinalexander.com/java/java-mysql-update-query-example/
+		
+		// create the java mysql update preparedstatement
+		String sql = "update Employee_Type set employee_type_name = ?, created_date =?, updated_date =?, is_Active=? where employeeType_id = ?";
+		PreparedStatement pstmt = (PreparedStatement) con.prepareStatement(sql);
+		
+		System.out.println("enter employee type name to be updated:");
+		String employeeTypeName=in.next();
+		
+		pstmt.setString(1,employeeTypeName);
+		pstmt.setDate(2, new Date(System.currentTimeMillis()));
+		pstmt.setDate(3, new Date(System.currentTimeMillis()));
+		pstmt.setBoolean(4, true);
+		pstmt.setInt(5, id);
+		pstmt.executeUpdate();
+		
+		String sql2 = "SELECT * FROM Employee_Type WHERE employeeType_id = ?";
+		PreparedStatement pstmt2 = (PreparedStatement) con.prepareStatement(sql2);
+		pstmt2.setInt(1, id);
+		ResultSet rs = pstmt2.executeQuery();
+		if (rs.next()) {
+			String employee_type_name = rs.getString("employee_type_name");
+			Date createdDate = rs.getDate("created_date");
+			Date updatedDate = rs.getDate("updated_date");
+			boolean isActive = rs.getBoolean("is_Active");
+			
+			System.out.println(id + " " + employee_type_name + " " + createdDate + " " + updatedDate + " " + isActive);
+		}
+	} catch (Exception e) {
+		System.out.println(e);
 	}
+}
+
 
 public static void deleteById() {
 	
-	}
+	String url = "jdbc:mysql://localhost:3306/hoteldbms";
+	 String user = "root";
+    String pass = "10@104Ar$";
+    
+    Scanner in=new Scanner(System.in);
+    
+   Connection con = null;
+   try {
+       Driver driver = (Driver) Class.forName("com.mysql.jdbc.Driver").newInstance();
+       DriverManager.registerDriver(driver);
+       
+       con = DriverManager.getConnection(url, user, pass);
+       Statement st = con.createStatement();
+       
+       System.out.println("enter id you want to delete:");
+    	int employeeType_id=in.nextInt();
+   	
+   	//below steps from this website:https://alvinalexander.com/java/java-mysql-delete-query-example/ 
+       String sql = "delete from Employee_Type where employeeType_id = ?";
+       PreparedStatement preparedStmt = (PreparedStatement) con.prepareStatement(sql);
+       preparedStmt.setInt(1, employeeType_id);
+       // execute the preparedstatement
+       preparedStmt.execute();
+       con.close(); 
+    }
+ catch (Exception ex) {
+     System.err.println(ex);
+   }
+}
+
 
 public static void makeIsActiveFalseById() {
 	
@@ -164,8 +238,10 @@ public static void insertIntoEmployeeTypeTable(){
 	public static void main(String[] args) {
 		
 		isEmployeeTypeTableCreated();
+		deleteById();
+	/*	updateById();
 		readFromEmployeeTypeTable();
-		insertIntoEmployeeTypeTable();
+		insertIntoEmployeeTypeTable(); */
 
 	}
 

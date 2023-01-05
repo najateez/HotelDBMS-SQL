@@ -63,11 +63,86 @@ public class Hotels {
 
 	public static void updateById(){
 		
+		    String url = "jdbc:mysql://localhost:3306/hoteldbms";
+		    String user = "root";
+	        String pass = "10@104Ar$";
+		
+		Scanner in = new Scanner(System.in);
+		System.out.println("Enter the id of the row to update:");
+		int id = in.nextInt();
+		Connection con = null;
+		try {
+			Driver driver = (Driver) Class.forName("com.mysql.jdbc.Driver").newInstance();
+			DriverManager.registerDriver(driver);
+			con = DriverManager.getConnection(url, user, pass);
+			
+			//some instructions i follow from this website: https://alvinalexander.com/java/java-mysql-update-query-example/
+			
+			// create the java mysql update preparedstatement
+			String sql = "update Hotels set hotel_name = ?, hotel_location = ?, created_date =?, updated_date =?, is_Active=? where id = ?";
+			PreparedStatement pstmt = (PreparedStatement) con.prepareStatement(sql);
+			
+			System.out.println("enter hotel name to be updated:");
+			String hotelNamee=in.next();
+			System.out.println("enter hotel location to be updated:");
+			String hotelLocationn=in.next();
+			
+			pstmt.setString(1,hotelNamee);
+			pstmt.setString(2,hotelLocationn);
+			pstmt.setDate(3, new Date(System.currentTimeMillis()));
+			pstmt.setDate(4, new Date(System.currentTimeMillis()));
+			pstmt.setBoolean(5, true);
+			pstmt.setInt(6, id);
+			pstmt.executeUpdate();
+			
+			String sql2 = "SELECT * FROM Hotels WHERE id = ?";
+			PreparedStatement pstmt2 = (PreparedStatement) con.prepareStatement(sql2);
+			pstmt2.setInt(1, id);
+			ResultSet rs = pstmt2.executeQuery();
+			if (rs.next()) {
+				String hotelName = rs.getString("hotel_name");
+				String hotelLocation = rs.getString("hotel_location");
+				Date createdDate = rs.getDate("created_date");
+				Date updatedDate = rs.getDate("updated_date");
+				boolean isActive = rs.getBoolean("is_Active");
+				System.out.println(id + " " + hotelName + " " + hotelLocation + " " + createdDate + " " + updatedDate+ " " + isActive);
+			}
+		} catch (Exception e) {
+			System.out.println(e);
 		}
+	}
 
 	public static void deleteById() {
 		
-		}
+		String url = "jdbc:mysql://localhost:3306/hoteldbms";
+		 String user = "root";
+	     String pass = "10@104Ar$";
+	     
+	     Scanner in=new Scanner(System.in);
+	     
+        Connection con = null;
+        try {
+            Driver driver = (Driver) Class.forName("com.mysql.jdbc.Driver").newInstance();
+            DriverManager.registerDriver(driver);
+            
+            con = DriverManager.getConnection(url, user, pass);
+            Statement st = con.createStatement();
+            
+            System.out.println("enter id you want to delete:");
+        	int id=in.nextInt();
+        	
+        	//below steps from this website:https://alvinalexander.com/java/java-mysql-delete-query-example/ 
+            String sql = "delete from Hotels where id = ?";
+            PreparedStatement preparedStmt = (PreparedStatement) con.prepareStatement(sql);
+            preparedStmt.setInt(1, id);
+            // execute the preparedstatement
+            preparedStmt.execute();
+            con.close(); 
+         }
+      catch (Exception ex) {
+          System.err.println(ex);
+        }
+     }
 
 	public static void makeIsActiveFalseById() {
 		
@@ -167,8 +242,11 @@ public class Hotels {
 	public static void main(String[] args) {
 		
 		isHotelsTableCreated();
+		deleteById();
+		updateById();
 		readFromHotelsTable();
-		insertIntoHotelsTable();
+    	insertIntoHotelsTable();
+		
 
 	}
 
