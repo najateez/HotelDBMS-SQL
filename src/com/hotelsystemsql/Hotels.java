@@ -48,7 +48,7 @@ public class Hotels {
 					Date updated_date = rs.getDate("updated_date");
 					boolean is_Active = rs.getBoolean("is_Active");
 					
-					System.out.println(id + " " + hotel_name + hotel_locationn +" " + created_date + " " + updated_date + " " + is_Active + " ");
+					System.out.println(id + " " + hotel_name +" " + hotel_locationn +" " + created_date + " " + updated_date + " " + is_Active + " ");
 					count++;
 				 }
 				con.close();
@@ -59,8 +59,45 @@ public class Hotels {
 		
 	public static void getById(){
 		
+		String url = "jdbc:mysql://localhost:3306/hoteldbms";
+	    String user = "root";
+        String pass = "10@104Ar$";
+        
+        Connection con = null;
+        
+        try {
+			Driver driver = (Driver) Class.forName("com.mysql.jdbc.Driver").newInstance();
+			DriverManager.registerDriver(driver);
+			con = DriverManager.getConnection(url, user, pass);
+			Statement st = con.createStatement();
+			
+			Scanner in = new Scanner(System.in);
+			
+			int count = 0;
+			System.out.println("enter id you want to search:");
+			int id = in.nextInt();
+			
+			String sql = "select * from Hotels where id='" + id + "'";
+			ResultSet rs = st.executeQuery(sql);
+			while (rs.next() && count <= id) {
+				int hotel_id = rs.getInt(1);
+				String hotel_name = rs.getString(2);
+				String hotel_location = rs.getString(3);
+				Date create_date = rs.getDate(4);
+				Date update_date = rs.getDate(5);
+				String is_Active = rs.getString(6);
+				
+				System.out.println("Id:" + id + "," + "hotel name:" + hotel_name + ","
+				+ "hotel location:" + hotel_location + "," + "created date:" + create_date + ","  
+				+ "updated date:" + update_date + "," + "is_Active:"+ is_Active);
+				count++;
+			}
+		} catch (Exception e) {
+			System.err.println(e);
 		}
+	}
 
+	
 	public static void updateById(){
 		
 		    String url = "jdbc:mysql://localhost:3306/hoteldbms";
@@ -146,7 +183,54 @@ public class Hotels {
 
 	public static void makeIsActiveFalseById() {
 		
+		 String url = "jdbc:mysql://localhost:3306/hoteldbms";
+		 String user = "root";
+	     String pass = "10@104Ar$";
+	     
+	     Connection con = null;
+	     
+   try {
+		 Driver driver = (Driver) Class.forName("com.mysql.jdbc.Driver").newInstance();
+		 DriverManager.registerDriver(driver);
+		 con = DriverManager.getConnection(url, user, pass);
+		 Statement st = con.createStatement();
+		 
+		 Scanner in= new Scanner(System.in);
+		 
+		 System.out.println("enter id to keep it not active:");
+     	 int id=in.nextInt();
+     	 
+     	 // similar way as update by id
+        /* hotel name and hotel location i did not mention because i want to keep them same as previous value
+          in database without change them.
+         */
+     	String sql = "update Hotels set created_date = ?, updated_date =?, is_Active =? where id = ?";
+		PreparedStatement pstmt = (PreparedStatement) con.prepareStatement(sql);
+		
+		pstmt.setDate(1, new Date(System.currentTimeMillis()));
+		pstmt.setDate(2, new Date(System.currentTimeMillis()));
+		pstmt.setBoolean(3, false); //true=1, false=0 
+		pstmt.setInt(4, id);
+		pstmt.executeUpdate();
+		
+		String sql2 = "SELECT * FROM Hotels WHERE id = ?";
+		
+		PreparedStatement pstmt2 = (PreparedStatement) con.prepareStatement(sql2);
+		pstmt2.setInt(1, id);
+		ResultSet rs = pstmt2.executeQuery();
+		if (rs.next()) {
+			String hotelName = rs.getString("hotel_name");
+			String hotelLocation = rs.getString("hotel_location");
+			Date createdDate = rs.getDate("created_date");
+			Date updatedDate = rs.getDate("updated_date");
+			boolean isActive = rs.getBoolean("is_Active");
+			System.out.println(id + " " + hotelName + " " + hotelLocation + " " + createdDate + " " + updatedDate+ " " + isActive);
 		}
+	} catch (Exception e) {
+		System.out.println(e);
+	}
+}
+      
 
 	public static void insertIntoHotelsTable(){
 		
@@ -241,11 +325,68 @@ public class Hotels {
 
 	public static void main(String[] args) {
 		
-		isHotelsTableCreated();
-		deleteById();
-		updateById();
-		readFromHotelsTable();
-    	insertIntoHotelsTable();
+		Scanner in=new Scanner(System.in);
+		
+		boolean isExit=true;
+		
+	do {
+		System.out.println("Menu:");
+		System.out.println("1:Create hotels table.");
+		System.out.println("2:Insert values into hotel table.");
+		System.out.println("3:Delete by hotel id.");
+		System.out.println("4:update by hotel id.");
+		System.out.println("5:Read From Hotels Table.");
+		System.out.println("6:Exit App.");
+		System.out.println("7:Get by id. (full row information).");
+		System.out.println("8:Make Is_Active False By Id.");
+		System.out.println("*******************************");
+		System.out.println("Enter any number from menu above");
+		int option=in.nextInt();
+		
+		switch(option) {
+		case 1:{
+			isHotelsTableCreated();
+			System.out.println("*******************************");
+			break;
+		}case 2:{
+			insertIntoHotelsTable();
+			System.out.println("*******************************");
+			break;
+		} case 3:{
+			deleteById();
+			System.out.println("*******************************");
+			break;
+		}case 4:{
+			updateById();
+			System.out.println("*******************************");
+			break;
+		}case 5:{
+			readFromHotelsTable();
+			System.out.println("*******************************");
+			break;
+		}case 6:{
+			isExit=false;
+			break;
+		}case 7:{
+			getById();
+			System.out.println("*******************************");
+			break;
+		}case 8:{
+			makeIsActiveFalseById();
+			System.out.println("*******************************");
+			break;
+		}default:{
+			System.out.println("it is not an option, try again.");
+			System.out.println("*******************************");
+		}
+		}
+	}while(isExit);
+		
+		
+		
+		
+		  
+    	
 		
 
 	}

@@ -56,7 +56,45 @@ public class Room_Type {
 	
 public static void getById(){
 	
+	String url = "jdbc:mysql://localhost:3306/hoteldbms";
+    String user = "root";
+    String pass = "10@104Ar$";
+    
+    Connection con = null;
+    
+    try {
+		Driver driver = (Driver) Class.forName("com.mysql.jdbc.Driver").newInstance();
+		DriverManager.registerDriver(driver);
+		con = DriverManager.getConnection(url, user, pass);
+		Statement st = con.createStatement();
+		
+		Scanner in = new Scanner(System.in);
+		
+		int count = 0;
+		System.out.println("enter id you want to search:");
+		int roomType_id = in.nextInt();
+		
+		String sql = "select * from Room_Type where roomType_id='" + roomType_id + "'";
+		ResultSet rs = st.executeQuery(sql);
+		while (rs.next() && count <= roomType_id) {
+			int rt_id = rs.getInt(1);
+			String room_type_name = rs.getString(2);
+			Date created_date = rs.getDate(3);
+			Date updated_date = rs.getDate(4);
+			String is_Active = rs.getString(5);
+			
+			System.out.println("Room type id:" + rt_id + "," + "room type name:" + room_type_name
+			+ "," + "created date:" + created_date + ","+ "updated date:" + updated_date + "," 
+			+ "is_Active:"+ is_Active);
+			count++;
+		}
+	} catch (Exception e) {
+		System.err.println(e);
 	}
+}
+
+	
+	
 
 public static void updateById(){
 	
@@ -139,7 +177,54 @@ public static void deleteById() {
 
 public static void makeIsActiveFalseById() {
 	
+	 String url = "jdbc:mysql://localhost:3306/hoteldbms";
+	 String user = "root";
+     String pass = "10@104Ar$";
+     
+     Connection con = null;
+     
+try {
+	 Driver driver = (Driver) Class.forName("com.mysql.jdbc.Driver").newInstance();
+	 DriverManager.registerDriver(driver);
+	 con = DriverManager.getConnection(url, user, pass);
+	 Statement st = con.createStatement();
+	 
+	 Scanner in= new Scanner(System.in);
+	 
+	 System.out.println("enter id to keep it not active:");
+ 	 int roomType_id=in.nextInt();
+ 	 
+ 	 // similar way as update by id
+    /* hotel name and hotel location i did not mention because i want to keep them same as previous value
+      in database without change them.
+     */
+ 	String sql = "update Room_Type set created_date = ?, updated_date =?, is_Active =? where roomType_id = ?";
+	PreparedStatement pstmt = (PreparedStatement) con.prepareStatement(sql);
+	
+	pstmt.setDate(1, new Date(System.currentTimeMillis()));
+	pstmt.setDate(2, new Date(System.currentTimeMillis()));
+	pstmt.setBoolean(3, false); //true=1, false=0 
+	pstmt.setInt(4, roomType_id);
+	pstmt.executeUpdate();
+	
+	String sql2 = "SELECT * FROM Room_Type WHERE roomType_id = ?";
+	
+	PreparedStatement pstmt2 = (PreparedStatement) con.prepareStatement(sql2);
+	pstmt2.setInt(1, roomType_id);
+	ResultSet rs = pstmt2.executeQuery();
+	if (rs.next()) {
+		String room_type_name = rs.getString("room_type_name");
+		Date createdDate = rs.getDate("created_date");
+		Date updatedDate = rs.getDate("updated_date");
+		boolean isActive = rs.getBoolean("is_Active");
+		
+		System.out.println(roomType_id + " " + room_type_name + " " + createdDate + " " + updatedDate+ " " + isActive);
 	}
+} catch (Exception e) {
+	System.out.println(e);
+}
+}
+
 
 public static void insertIntoRoomTypeTable(){
 	
@@ -235,11 +320,64 @@ public static void insertIntoRoomTypeTable(){
 
 	public static void main(String[] args) {
 		
+Scanner in=new Scanner(System.in);
+		
+		boolean isExit=true;
+		
+	do {
+		System.out.println("Menu:");
+		System.out.println("1:Create Room_Type table.");
+		System.out.println("2:Insert values into room type table.");
+		System.out.println("3:Delete by room_type id.");
+		System.out.println("4:update by room_type id.");
+		System.out.println("5:Read From room_type Table.");
+		System.out.println("6:Exit App.");
+		System.out.println("7:Get by id. (full row information).");
+		System.out.println("8:Make Is_Active False By Id.");
+		System.out.println("*******************************");
+		System.out.println("Enter any number from menu above");
+		int option=in.nextInt();
+		
+		switch(option) {
+		case 1:{
 		isRoomTypeTableCreated();
-		deleteById();
-	/*	updateById();
-		readFromTableRoomType();
-		insertIntoRoomTypeTable(); */
+		System.out.println("*******************************");
+		break;
+		}case 2:{
+		 insertIntoRoomTypeTable();	
+		 System.out.println("*******************************");
+		 break;
+		}case 3:{
+		 deleteById();	
+		 System.out.println("*******************************");
+		 break;
+		}case 4:{
+		 updateById();
+		 System.out.println("*******************************");
+		 break;
+		}case 5:{
+		  readFromTableRoomType();
+		  System.out.println("*******************************");
+		  break;
+		}case 6:{
+		 isExit=false;
+		 break;
+		}case 7:{
+			getById();
+			System.out.println("*******************************");
+			break;
+		}case 8:{
+			makeIsActiveFalseById();
+			System.out.println("*******************************");
+			break;
+		}default:{
+			System.out.println("it is not an option, try again.");
+			System.out.println("*******************************");
+		}
+	  }
+	}while(isExit);
+		
+
 
 	}
 
