@@ -48,7 +48,7 @@ public class Hotels {
 					Date updated_date = rs.getDate("updated_date");
 					boolean is_Active = rs.getBoolean("is_Active");
 					
-					System.out.println(id + " " + hotel_name +" " + hotel_locationn +" " + created_date + " " + updated_date + " " + is_Active + " ");
+					System.out.println("id:"+id + ", hotel name:" + hotel_name +", hotel location: " + hotel_locationn +", created date:" + created_date + ", updated date:" + updated_date + ", isActive:" + is_Active + " ");
 					count++;
 				 }
 				con.close();
@@ -142,7 +142,7 @@ public class Hotels {
 				Date createdDate = rs.getDate("created_date");
 				Date updatedDate = rs.getDate("updated_date");
 				boolean isActive = rs.getBoolean("is_Active");
-				System.out.println(id + " " + hotelName + " " + hotelLocation + " " + createdDate + " " + updatedDate+ " " + isActive);
+				System.out.println("id:"+id + ", hotel name:" + hotelName + ", hotel location:" + hotelLocation + ", created date:" + createdDate + ", updated date:" + updatedDate+ ", isActive:" + isActive);
 			}
 		} catch (Exception e) {
 			System.out.println(e);
@@ -224,7 +224,7 @@ public class Hotels {
 			Date createdDate = rs.getDate("created_date");
 			Date updatedDate = rs.getDate("updated_date");
 			boolean isActive = rs.getBoolean("is_Active");
-			System.out.println(id + " " + hotelName + " " + hotelLocation + " " + createdDate + " " + updatedDate+ " " + isActive);
+			System.out.println("id:"+id + ", hotel name:" + hotelName + ", hotel location:" + hotelLocation + ", created date:" + createdDate + ", updated date:" + updatedDate+ ", isActive:" + isActive);
 		}
 	} catch (Exception e) {
 		System.out.println(e);

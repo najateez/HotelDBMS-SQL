@@ -136,8 +136,8 @@ public class Main {
 					Date updated_date = rs.getDate("updated_date");
 					boolean isActive = rs.getBoolean("is_Active");
 					
-					System.out.println(id + " " + hotel_name+ " " + hotel_location +" " + created_date + " "
-							+updated_date+ " "+ isActive);
+					System.out.println("id:"+id + ", hotel name:" + hotel_name+ ", hotel location:" + hotel_location 
+					+", created date:" + created_date + ", updated date:"+updated_date+ ", isActive:"+ isActive);
 					count++;
 				 }
 				con.close();

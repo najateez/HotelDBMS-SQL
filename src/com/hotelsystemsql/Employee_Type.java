@@ -45,7 +45,7 @@ public class Employee_Type {
 					Date updated_date = rs.getDate("updated_date");
 					boolean is_Active = rs.getBoolean("is_Active");
 					
-					System.out.println(employeeType_id + " " + employee_type_name + " " + created_date + " " + updated_date + " " + is_Active + " ");
+					System.out.println("Employee type id:"+ employeeType_id + ", employee_type_name:" + employee_type_name + ", created_date:" + created_date + ", updated_date:" + updated_date + ", is_Active:" + is_Active + " ");
 					count++;
 				 }
 				con.close();
@@ -136,7 +136,7 @@ public static void updateById(){
 			Date updatedDate = rs.getDate("updated_date");
 			boolean isActive = rs.getBoolean("is_Active");
 			
-			System.out.println(id + " " + employee_type_name + " " + createdDate + " " + updatedDate + " " + isActive);
+			System.out.println("id:"+id + ", employee type name:" + employee_type_name + ", created date:" + createdDate + ", updated date:" + updatedDate + ", isActive:" + isActive);
 		}
 	} catch (Exception e) {
 		System.out.println(e);
@@ -219,7 +219,7 @@ try {
 		Date createdDate = rs.getDate("created_date");
 		Date updatedDate = rs.getDate("updated_date");
 		boolean isActive = rs.getBoolean("is_Active");
-		System.out.println(employeeType_id + " " + employee_type_name + " " + createdDate + " " + updatedDate+ " " + isActive);
+		System.out.println("employee type id:"+employeeType_id + ", employee type name:" + employee_type_name + ", created date:" + createdDate + ", updated date:" + updatedDate+ ", isActive:" + isActive);
 	}
 } catch (Exception e) {
 	System.out.println(e);

@@ -45,7 +45,7 @@ public class Room_Type {
 					Date updated_date = rs.getDate("updated_date");
 					boolean is_Active = rs.getBoolean("is_Active");
 					
-					System.out.println(roomType_id + " " + room_type_name + " " + created_date + " " + updated_date + " " + is_Active + " ");
+					System.out.println("room type id:"+roomType_id + ", room type name:" + room_type_name + ", created date:" + created_date + ", updated date:" + updated_date + ", isActive:" + is_Active + " ");
 					count++;
 				 }
 				con.close();
@@ -136,7 +136,7 @@ try {
 		Date createdDate = rs.getDate("created_date");
 		Date updatedDate = rs.getDate("updated_date");
 		boolean isActive = rs.getBoolean("is_Active");
-		System.out.println(id + " " + room_type_name + " " + createdDate + " " + updatedDate + " " + isActive);
+		System.out.println("id:"+id + ", room type name:" + room_type_name + ", created date:" + createdDate + ", updated date:" + updatedDate + ", isActive:" + isActive);
 	}
 } catch (Exception e) {
 	System.out.println(e);
@@ -218,7 +218,7 @@ try {
 		Date updatedDate = rs.getDate("updated_date");
 		boolean isActive = rs.getBoolean("is_Active");
 		
-		System.out.println(roomType_id + " " + room_type_name + " " + createdDate + " " + updatedDate+ " " + isActive);
+		System.out.println("room type id:"+roomType_id + ", room type name:" + room_type_name + ", created date:" + createdDate + ", updated date:" + updatedDate+ ", isActive:" + isActive);
 	}
 } catch (Exception e) {
 	System.out.println(e);
