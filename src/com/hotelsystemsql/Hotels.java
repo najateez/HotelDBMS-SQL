@@ -73,6 +73,7 @@ public class Hotels {
 			
 			Scanner in = new Scanner(System.in);
 			
+			//if adding count or no it will not effects the result
 			int count = 0;
 			System.out.println("enter id you want to search:");
 			int id = in.nextInt();
@@ -262,7 +263,7 @@ public class Hotels {
 	             
                for (int i = 0; i < noOfRowsToBeInserted; i++) {
                Random rn = new Random();   //here i import library of class Random.
-               int numberToAdd = rn.nextInt(100);
+               int numberToAdd = rn.nextInt(800);
                int id=i+numberToAdd;
                
                String hotel_name = "najat" + numberToAdd;

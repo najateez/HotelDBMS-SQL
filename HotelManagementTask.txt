@@ -1,0 +1,16 @@
+HotelManagement Task:-
+-----------------------------------
+
+- "Update foreign key 'room_id' in employees table. It was previously connected with Hotels but now it should be connected to Rooms"
+- You have to put dummy data into your tables now.
+- There have to be More than 100 hotels, 20 employees, 1000 guests
+- 3 Rooms types are-> 'STANDARD', 'DELUXE', 'SUITE'
+- Every hotel must atleast have 10 rooms
+- Employee Types are -> 'MANAGER', 'ATTENDANT', 'VALET', 'BUTLER', 'DIRECTOR'
+I need you now to write Java code in new class called 'HotelManagement':
+1) Guests who's name end with 'E'
+2) Rooms where guests are paying more than 1000
+3) Count of guests who are staing in 'DELUXE' rooms
+4) Guests who are staing in rooms and served by employee who have 'A' in their name
+5) All rooms which are not active but room type is 'Deluxe'
+6) All room type in hotels who's name have 'H' or are active but have more than 5 rooms.
