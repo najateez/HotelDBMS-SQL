@@ -429,14 +429,57 @@ public class HotelManagement {
 	}
 	 
   
-public static void guestsWhoAreStayingInRoomsAndServedByEmployeeWhoHaveAInTheirName() {
-	  
+ public static void guestsWhoAreStayingInRoomsAndServedByEmployeeWhoHaveAInTheirName() {
 	
 	
-	
-  }
-  
-  
+/*	String url = "jdbc:mysql://localhost:3306/hoteldbms";
+    String user = "root";
+    String pass = "10@104Ar$";
+    
+    Connection con = null;
+    
+    try {
+		Driver driver = (Driver) Class.forName("com.mysql.jdbc.Driver").newInstance();
+		DriverManager.registerDriver(driver);
+		con = DriverManager.getConnection(url, user, pass);
+		Statement st = con.createStatement();
+		
+		Scanner in = new Scanner(System.in);
+		
+		//if adding count or no it will not effects the result
+		int count = 0;
+		
+		String sql1 = "select * from Employee_type where employee_type_name LIKE '%a%' ";
+		ResultSet rs1 = st.executeQuery(sql1);
+		while (rs1.next()) {
+		String employee_type_name = rs1.getString(2);
+
+		String sql = "select Guests.* from Guests inner join Rooms ON Guests.rooms_id =Rooms.rooms_id inner join Employees ON Employees.rooms_id=Rooms.rooms_id ";
+		ResultSet rs = st.executeQuery(sql);
+		while (rs.next()) {
+			int guests_id = rs.getInt(1);
+			String guest_name = rs.getString(2);
+			String guest_phone = rs.getString(3);
+			int guest_accompanying_members = rs.getInt(4);
+			int guest_payment_amount = rs.getInt(5);
+			int rooms_id = rs.getInt(6);
+			int id = rs.getInt(7);
+			Date create_date = rs.getDate(8);
+			Date update_date = rs.getDate(9);
+			Boolean is_Active = rs.getBoolean(10);
+			
+			System.out.println("guests id:" + guests_id + "," + "guest name:" + guest_name + ","
+			+ "guest phone:" + guest_phone + "," + "guest accompanying members:" + guest_accompanying_members + ","
+			+ "guest payment amount:" + guest_payment_amount + ","+ "rooms id:" + rooms_id + ","
+			+ "id:" + id + "," + "created date:" + create_date + "," + "updated date:" + update_date + "," 
+			+ "is_Active:"+ is_Active+ ",employee_type_name:"+ employee_type_name);
+		}
+			con.close();
+	}
+	} catch (Exception e) {
+		System.err.println(e);
+	} */
+}     
 
 
 	public static void main(String[] args) {
@@ -487,6 +530,7 @@ public static void guestsWhoAreStayingInRoomsAndServedByEmployeeWhoHaveAInTheirN
 			break;
 		}case 7:{
 			
+			guestsWhoAreStayingInRoomsAndServedByEmployeeWhoHaveAInTheirName();
 			
 			break;
 		}case 8:{
